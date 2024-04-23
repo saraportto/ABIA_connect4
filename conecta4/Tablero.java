@@ -49,18 +49,32 @@ public class Tablero {
     }
     
     public String toString() {
-        String result = new String();
-        int col, fila;
+        StringBuilder result = new StringBuilder();
         
-        for (fila=NFILAS-1; fila >= 0; fila--) {
-            result += "|";
-            for (col=0; col < NCOLUMNAS; col++) {
-                result += (MARCAS[_casillas[col][fila]]+"|");
-            }
-            result += "\n";
+        // ANSI para las fichas
+        String colorX = "\u001B[31;1m"; // Rojo para "X"
+        String colorO = "\u001B[33;1m"; // Amarillo para "O"
+        String resetColor = "\u001B[0m"; 
+        
+        for (int fila = NFILAS - 1; fila >= 0; fila--) {
+            result.append("|");
+            for (int col = 0; col < NCOLUMNAS; col++) {
+                int casilla = _casillas[col][fila];
+                String marca = MARCAS[casilla];
+                if (marca.equals(MARCA_J1)) {
+                    result.append(colorX).append(marca).append(resetColor).append("|");
+                } else if (marca.equals(MARCA_J2)) {
+                    result.append(colorO).append(marca).append(resetColor).append("|");
+                } else {
+                    result.append(marca).append("|");
+                    }
+                }
+                result.append("\n");
+                }
+            return result.toString();
         }
-        return(result);
-    }
+    
+    
     
     public boolean[] columnasLibres() {
         boolean [] result = new boolean[NCOLUMNAS];

@@ -23,7 +23,7 @@ public class Conecta4 {
     public static void main(String[] args) {
         cargarArgumentos(args);
 
-        // Crear jugadores y establecer estrategias
+    // Crear jugadores y establecer estrategias
 	// Jugador 1: jugador humano
         Jugador jugador1 = new Jugador(1);
         jugador1.establecerEstrategia(new EstrategiaHumano());
