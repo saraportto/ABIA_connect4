@@ -31,37 +31,7 @@ public class Entrenamiento {
         DEBUG("Jugador 2: maquina nueva\n");
 
         // Jugar
-        int jugador1_gana = 0;
-        int jugador2_gana = 0;
-        int empates = 0;
-
-        for (int partida=0; partida<50; partida++) {
-            Tablero tablero = new Tablero();
-            tablero.inicializar();
-
-            if (partida % 2 == 0) {
-                jugar(jugador2, jugador1, tablero);
-            } else {
-                jugar(jugador1, jugador2, tablero);
-            }
-            // Mostrar resultados
-            tablero.mostrar();
-            if (tablero.hayEmpate()) {
-                System.out.println("RESULTADO: Empate");
-                empates++;
-            }
-            if (tablero.ganaJ1()){
-                System.out.println("RESULTADO: Gana jugador 1");
-                jugador1_gana++;
-            }
-            if (tablero.ganaJ2()){
-                System.out.println("RESULTADO: Gana jugador 2");
-                jugador2_gana++;
-            }
-        }
-        System.out.println("Jugador 1 gana: " + jugador1_gana);
-        System.out.println("Jugador 2 gana: " + jugador2_gana);
-        System.out.println("Empates: " + empates);
+        boolean jugador1_gana = combate(jugador1, jugador2);
 
         System.exit(1);
     }
@@ -107,7 +77,42 @@ public class Entrenamiento {
             }            
         }        
     }
-      
+
+    private static boolean combate(Jugador jugador1, Jugador jugador2) {
+        int jugador1_gana = 0;
+        int jugador2_gana = 0;
+
+        for (int partida=0; partida<2; partida++) {
+            Tablero tablero = new Tablero();
+            tablero.inicializar();
+
+            if (partida % 2 == 0) {
+                jugar(jugador2, jugador1, tablero);
+            } else {
+                jugar(jugador1, jugador2, tablero);
+            }
+            // Mostrar resultados
+            tablero.mostrar();
+            if (tablero.hayEmpate()) {
+                System.out.println("RESULTADO: Empate");
+            }
+            if (tablero.ganaJ1()){
+                System.out.println("RESULTADO: Gana jugador 1");
+                jugador1_gana++;
+            }
+            if (tablero.ganaJ2()){
+                System.out.println("RESULTADO: Gana jugador 2");
+                jugador2_gana++;
+            }
+        }
+        if (jugador1_gana < jugador2_gana) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public static final void ERROR_FATAL(java.lang.String mensaje) {
         System.out.println("ERROR FATAL\n\t"+mensaje);
         System.exit(0); // Finalizar aplicacion
