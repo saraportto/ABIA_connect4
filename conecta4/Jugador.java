@@ -12,13 +12,12 @@ public class Jugador {
     
     private Estrategia _estrategia;
     private int _identificador;
+    private Pesos _pesos;
     
     /** Creates a new instance of Jugador */
-    public Jugador() {
-    }
-    
     public Jugador(int identificador) {
         _identificador = identificador;
+        _pesos = new Pesos(1.0, 1.0);
     }
     
     public void establecerEstrategia(Estrategia estrategia) {
@@ -31,6 +30,14 @@ public class Jugador {
     
     public int getIdentificador() {
         return(_identificador);
+    }
+    
+    public void establecerPesos(Pesos pesos) {
+        _pesos = pesos;
+    }
+
+    public Pesos obtenerPesos() {
+        return(_pesos);
     }
     
     public static final int alternarJugador(int jugadorActual) {

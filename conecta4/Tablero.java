@@ -12,7 +12,7 @@ public class Tablero {
     private static final String MARCA_VACIO = " ";
     private static final String[] MARCAS = {MARCA_VACIO, MARCA_J1, MARCA_J2};
     
-    private static final int VACIO = 0;
+    public static final int VACIO = 0;
     private static final int JUGADOR1 = 1;    
     private static final int JUGADOR2 = 2;
     private static final int EMPATE = -1;
@@ -191,6 +191,26 @@ public class Tablero {
         }
         return (numCasillas >= NOBJETIVO);        
     }
+
+    public int contarLineaVertical(int col, int fila, int jugador, int noObjetivo) {
+        int j;
+        int numCasillas = 0;
+
+        for (j = fila; j < NFILAS; j++) {
+           if (_casillas[col][j] == jugador) {
+               numCasillas++;
+           }
+           else {
+               break;
+           }
+        }
+        if (numCasillas == noObjetivo) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
     
     private boolean hayLineaHorizontal(int col, int fila, int jugador) {
        int i;
@@ -206,6 +226,26 @@ public class Tablero {
         }
         return (numCasillas >= NOBJETIVO);             
     }
+
+    public int contarLineaHorizontal(int col, int fila, int jugador, int noObjetivo) {
+        int i;
+        int numCasillas = 0;
+        
+        for (i = col; i < NCOLUMNAS; i++) {
+            if (_casillas[i][fila] == jugador) {
+                numCasillas++;
+            }
+            else {
+                break;
+            }
+        }
+        if (numCasillas == noObjetivo) {
+            return 1;
+        }
+        else {
+            return 0;
+        }    
+     }
     
     private boolean hayLineaDiagonal(int col, int fila, int jugador) {
         int i,j,k;
@@ -249,7 +289,52 @@ public class Tablero {
            }
         }
         return (numCasillas >= NOBJETIVO);                
-    }    
+    }
+    
+    public int contarLineaDiagonal(int col, int fila, int jugador, int noObjetivo) {
+        int i,j,k;
+        int numCasillas = 0;
+        int contador = 0;
+
+        //diagonales "crecientes"
+        for (k=0; k < noObjetivo; k++) {
+           i = col+k;
+           j = fila+k;
+           if ((i < NCOLUMNAS) && (j < NFILAS)) {
+               if (_casillas[i][j] == jugador) {
+                   numCasillas++;
+               }
+               else {
+                   break;
+               }
+           }
+           if (numCasillas == noObjetivo) {
+               contador++;
+           }
+        }
+        
+        //diagonales "decrecientes"
+        numCasillas = 0;
+        for (k=0; k < noObjetivo; k++) {
+           i = col+k;
+           j = fila-k;
+           if ((i < NCOLUMNAS) && (j >= 0)) {
+               if (_casillas[i][j] == jugador) {
+                   numCasillas++;
+               }
+               else {
+                   break;
+               }
+           }
+           else {
+               break;
+           }
+        }
+        if (numCasillas == noObjetivo) {
+            contador++;
+        }
+        return contador;
+    }
     
     private void copiarCasillas(int[][] casillas) {
         int col, fila;
@@ -261,8 +346,12 @@ public class Tablero {
         }       
     }    
     
+    public int[][] obtenerCasillas() {
+        return(_casillas);
+    }
+
     private void copiarPosicionLibre(int[] posicionLibre) {
-        int col, fila;
+        int col;
         
         for (col=0; col < NCOLUMNAS; col++) {
             this._posicionLibre[col] = posicionLibre[col];
