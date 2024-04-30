@@ -17,7 +17,7 @@ public class Jugador {
     /** Creates a new instance of Jugador */
     public Jugador(int identificador) {
         _identificador = identificador;
-        _pesos = new Pesos(1.0, 1.0);
+        _pesos = new Pesos(1.0, 1.0, 1.0);
     }
     
     public void establecerEstrategia(Estrategia estrategia) {

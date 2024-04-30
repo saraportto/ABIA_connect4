@@ -336,6 +336,20 @@ public class Tablero {
         return contador;
     }
     
+    public int contarAdyacentes(int col, int fila, int jugador) {
+        int contador = 0;
+        for (int new_col = -1; new_col < 2; new_col++) {
+            for (int new_fila = -1; new_fila < 2; new_fila++) {
+                if (new_col + col >= 0 && new_col + col < NCOLUMNAS && new_fila + fila >= 0 && new_fila + fila < NFILAS) {
+                    if (_casillas[new_col + col][new_fila + fila] == jugador) {
+                        contador++;
+                    }
+                }
+            }
+        }
+        return contador-1;  // Se resta 1 para no contar la casilla en la que se encuentra la propia ficha
+    }
+
     private void copiarCasillas(int[][] casillas) {
         int col, fila;
         
