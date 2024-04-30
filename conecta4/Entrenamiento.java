@@ -16,27 +16,17 @@ public class Entrenamiento {
     // Crear jugadores y establecer estrategias
 	// Jugador 1: jugador humano
         Jugador jugador1 = new Jugador(1);
-        jugador1.establecerPesos(new Pesos(1.0, 1.0, 1.5, 1.0));
         jugador1.establecerEstrategia(new EstrategiaMiniMax(
             4,
-            jugador1.obtenerPesos(),
-            new EvaluadorAleatorio(),
-            new EvaluadorPorCombos(2),
-            new EvaluadorPorCombos(3),
-            new EvaluadorPorAdyacentes()
+            new EvaluadorPonderado()
         ));
         DEBUG("Jugador 1: maquina actual\n");
        
         // Jugador 2: jugador minimax con evaluador aleatorio y prof. busqueda 4
         Jugador jugador2 = new Jugador(2);
-        jugador2.establecerPesos(new Pesos(1.0, 1.5, 0.0, 2.0));
         jugador2.establecerEstrategia(new EstrategiaMiniMax(
             4,
-            jugador2.obtenerPesos(),
-            new EvaluadorAleatorio(),
-            new EvaluadorPorCombos(2),
-            new EvaluadorPorCombos(3),
-            new EvaluadorPorAdyacentes()
+            new EvaluadorPonderado()
         ));
         DEBUG("Jugador 2: maquina nueva\n");
 

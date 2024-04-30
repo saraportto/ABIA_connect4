@@ -6,31 +6,28 @@ public class EstrategiaMiniMax extends Estrategia {
      * "establecerEvaluador()" y "establecerCapaMaxima()"
      */
      
-    private Evaluador[] _evaluador;
+    private Evaluador _evaluador;
     private int _capaMaxima;
     private int _jugadorMAX;
-    private Pesos _pesos;
    
     /** Creates a new instance of EstrategiaMiniMax */
     public EstrategiaMiniMax() {
     }
     
-    public EstrategiaMiniMax(int capaMaxima, Pesos pesos, Evaluador... evaluador) {
+    public EstrategiaMiniMax(int capaMaxima, Evaluador evaluador) {
        this.establecerEvaluador(evaluador);
        this.establecerCapaMaxima(capaMaxima);
-       this.establecerPesos(pesos);
-       if (evaluador.length != pesos.size()) {
-           throw new IllegalArgumentException("El número de evaluadores debe coincidir con el número de pesos");
-       }
+
     }
 
     public int buscarMovimiento(Tablero tablero, int jugador) {
 
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
-        int col,valorSucesor;
+        int col;
+        double valorSucesor;
         int mejorPosicion=-1;  // Movimiento nulo
-        int mejorValor=_evaluador[0].MINIMO; // Minimo  valor posible 
+        double mejorValor=Evaluador.MINIMO; // Minimo  valor posible 
 
         _jugadorMAX = jugador; 
 
@@ -55,7 +52,7 @@ public class EstrategiaMiniMax extends Estrategia {
     }
     
     
-    public int MINIMAX(Tablero tablero, int alpha, int beta, int jugador, int capa) {
+    public double MINIMAX(Tablero tablero, double alpha, double beta, int jugador, int capa) {
         // Implementa la propagación de valores MINIMAX propiamente dicha
 	// a partir del segundo nivel (capa 1)
        
@@ -68,24 +65,23 @@ public class EstrategiaMiniMax extends Estrategia {
 	// -> se usa el identificador del jugador MAX (1 o 2) guardado
 	//    en la llamada a buscarMovimiento()
         if (tablero.esGanador(_jugadorMAX)){ // gana MAX
-            return(_evaluador[0].MAXIMO);
+            return(Evaluador.MAXIMO);
         }
         if (tablero.esGanador(Jugador.alternarJugador(_jugadorMAX))){ // gana el otro
-            return(_evaluador[0].MINIMO);
+            return(Evaluador.MINIMO);
         }
         if (capa == (_capaMaxima)) { // alcanza nivel maximo
             //return(_evaluador.valoracion(tablero, _jugadorMAX));
             double valor = 0.0;
-            for (int evaluador = 0; evaluador < _evaluador.length; evaluador++) {
-                valor += _evaluador[evaluador].valoracion(tablero, _jugadorMAX) * _pesos.obtenerPeso(evaluador);
-            }
-            return((int)valor);
+            valor = _evaluador.valoracion(tablero, _jugadorMAX);
+            return((double)valor);
         }
 
        // Recursividad sobre los sucesores
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
-        int col, alpha_actual, beta_actual, aux;
+        int col;
+        double alpha_actual, beta_actual, aux;
 
         if (esCapaMIN(capa)) {
            beta_actual = beta;
@@ -134,29 +130,23 @@ public class EstrategiaMiniMax extends Estrategia {
         _capaMaxima = capaMaxima;
     }
    
-    public void establecerEvaluador(Evaluador[] evaluador) {
+    public void establecerEvaluador(Evaluador evaluador) {
         _evaluador = evaluador;
     }
 
-    public void establecerPesos(Pesos pesos) {
-        _pesos = pesos;
-    }
+
     private static final boolean esCapaMIN(int capa) {
         return((capa % 2)==1); // es impar
     }
-    
-    private static final boolean esCapaMAX(int capa) {
-        return((capa % 2)==0); // es par
-    }
-    
-    private static final int maximo2(int v1, int v2) {
+
+    private static final double maximo2(double v1, double v2) {
         if (v1 > v2)
             return(v1);
         else
             return(v2);
     }
     
-    private static final int minimo2(int v1, int v2) {
+    private static final double minimo2(double v1, double v2) {
         if (v1 < v2)
             return(v1);
         else

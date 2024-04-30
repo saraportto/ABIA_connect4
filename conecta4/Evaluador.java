@@ -27,6 +27,6 @@ public abstract class Evaluador {
     public Evaluador() {
     }
     
-    public abstract int valoracion(Tablero tablero, int jugador);
+    public abstract double valoracion(Tablero tablero, int jugador);
     
 }

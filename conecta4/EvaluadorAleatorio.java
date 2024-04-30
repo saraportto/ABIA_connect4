@@ -21,7 +21,7 @@ public class EvaluadorAleatorio extends Evaluador {
     public EvaluadorAleatorio() {
     }
     
-    public int valoracion(Tablero tablero, int jugador) {
+    public double valoracion(Tablero tablero, int jugador) {
         return(generador.nextInt(MAXIMO+Math.abs(MINIMO)) - Math.abs(MINIMO));
     }
 }
