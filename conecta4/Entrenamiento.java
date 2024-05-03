@@ -82,7 +82,7 @@ public class Entrenamiento {
         int jugador1_gana = 0;
         int jugador2_gana = 0;
 
-        for (int partida=0; partida<2; partida++) {
+        for (int partida=0; partida<8; partida++) {
             Tablero tablero = new Tablero();
             tablero.inicializar();
 
@@ -105,6 +105,8 @@ public class Entrenamiento {
                 jugador2_gana++;
             }
         }
+        System.out.println("Jugador 1: "+jugador1_gana+" victorias");
+        System.out.println("Jugador 2: "+jugador2_gana+" victorias");
         if (jugador1_gana < jugador2_gana) {
             return true;
         } else {

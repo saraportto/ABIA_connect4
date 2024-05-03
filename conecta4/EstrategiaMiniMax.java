@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Random;
+
 public class EstrategiaMiniMax extends Estrategia {
     /* Estrategia que implementa una busqueda MINIMAX
      * 
@@ -26,8 +29,9 @@ public class EstrategiaMiniMax extends Estrategia {
         Tablero nuevoTablero;
         int col;
         double valorSucesor;
-        int mejorPosicion=-1;  // Movimiento nulo
-        double mejorValor=Evaluador.MINIMO; // Minimo  valor posible 
+        int[] mejoresPosiciones={-1};  // Movimiento nulo
+        double mejorValor=Evaluador.MINIMO; // Minimo  valor posible
+        Random rand = new Random();
 
         _jugadorMAX = jugador; 
 
@@ -42,13 +46,30 @@ public class EstrategiaMiniMax extends Estrategia {
                 nuevoTablero = null;
                 
                 // tomar mejor valor
-                if (valorSucesor >= mejorValor) {
+                if (valorSucesor > mejorValor) {
                     mejorValor = valorSucesor;
-                    mejorPosicion = col;
+                    mejoresPosiciones = new int[1];
+                    mejoresPosiciones[0] = col;
+                } else if (valorSucesor == mejorValor) {
+                    int[] aux = new int[mejoresPosiciones.length+1];
+                    System.arraycopy(mejoresPosiciones, 0, aux, 0, mejoresPosiciones.length);
+                    aux[mejoresPosiciones.length] = col;
+                    mejoresPosiciones = aux;
+                    aux = null;
                 }
             }
         }
-        return(mejorPosicion);        
+
+        // seleccionar uno de los mejores movimientos de forma aleatoria
+        if (mejoresPosiciones.length > 1) {
+            int indiceAleatorio = rand.nextInt(mejoresPosiciones.length);
+            while (mejoresPosiciones[indiceAleatorio] == -1) {
+                indiceAleatorio = rand.nextInt(mejoresPosiciones.length);
+            }
+            return mejoresPosiciones[indiceAleatorio];
+        } else {
+            return mejoresPosiciones[0];
+        }
     }
     
     
