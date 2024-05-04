@@ -15,9 +15,15 @@ public abstract class Estrategia {
      */
    
     /** Creates a new instance of Estrategia */
+    private Evaluador _evaluador;
+
     public Estrategia() {
     }
     
     public abstract int buscarMovimiento(Tablero tablero, int jugador);
+
+    public abstract void establecerEvaluador(Evaluador evaluador);
+    public abstract Evaluador obtenerEvaluador();
+    
     
 }

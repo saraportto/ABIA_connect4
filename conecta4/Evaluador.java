@@ -21,12 +21,15 @@ public abstract class Evaluador {
     private Tablero _tablero;
     private int _jugador;
     private int _valoracion;
-    
+    private Pesos _pesos;
     
     /** Creates a new instance of Evaluador */
     public Evaluador() {
     }
     
     public abstract double valoracion(Tablero tablero, int jugador);
+    
+    public abstract void establecerPesos(Pesos pesos);
+    public abstract Pesos obtenerPesos();
     
 }

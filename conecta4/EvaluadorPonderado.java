@@ -40,11 +40,11 @@ public class EvaluadorPonderado  extends Evaluador{
         return(valoracion);
     }
 
-    public Pesos getPesos() {
+    public Pesos obtenerPesos() {
         return pesos;
     }
 
-    public void setPesos(Pesos pesos) {
+    public void establecerPesos(Pesos pesos) {
         this.pesos = pesos;
     }
 }

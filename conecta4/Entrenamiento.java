@@ -31,7 +31,10 @@ public class Entrenamiento {
         DEBUG("Jugador 2: maquina nueva\n");
 
         // Jugar
-        boolean jugador1_gana = combate(jugador1, jugador2);
+        
+        if (combate(jugador1, jugador2)) {
+            jugador1.obtenerEstrategia().obtenerEvaluador().establecerPesos(jugador2.obtenerEstrategia().obtenerEvaluador().obtenerPesos());
+        }
 
         System.exit(1);
     }

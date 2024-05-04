@@ -21,6 +21,10 @@ public class Jugador {
     public void establecerEstrategia(Estrategia estrategia) {
         _estrategia = estrategia;
     }
+
+    public Estrategia obtenerEstrategia() {
+        return(_estrategia);
+    }
     
     public int obtenerJugada(Tablero tablero) {
         return(_estrategia.buscarMovimiento(tablero, _identificador));
