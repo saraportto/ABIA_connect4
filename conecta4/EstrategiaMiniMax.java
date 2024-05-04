@@ -155,6 +155,9 @@ public class EstrategiaMiniMax extends Estrategia {
         _evaluador = evaluador;
     }
 
+    public Evaluador obtenerEvaluador() {
+        return(_evaluador);
+    }
 
     private static final boolean esCapaMIN(int capa) {
         return((capa % 2)==1); // es impar

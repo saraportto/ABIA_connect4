@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Entrenamiento {
     private Jugador _jugador1;    
     private Jugador _jugador2;
@@ -31,13 +34,26 @@ public class Entrenamiento {
         DEBUG("Jugador 2: maquina nueva\n");
 
         // Jugar
-        
-        if (combate(jugador1, jugador2)) {
-            jugador1.obtenerEstrategia().obtenerEvaluador().establecerPesos(jugador2.obtenerEstrategia().obtenerEvaluador().obtenerPesos());
-        }
 
-        System.exit(1);
+        boolean salir = false;
+        while (!salir) {
+            salir = true;
+            Pesos[] nuevosPesos = jugador1.obtenerEstrategia().obtenerEvaluador().obtenerPesos().mutar();
+            for (Pesos pesos : nuevosPesos) {
+                jugador2.obtenerEstrategia().obtenerEvaluador().establecerPesos(pesos);
+                if (combate(jugador1, jugador2)) {
+                    jugador1.obtenerEstrategia().obtenerEvaluador().establecerPesos(jugador2.obtenerEstrategia().obtenerEvaluador().obtenerPesos());
+                    System.out.println("Nuevos pesos: " + jugador1.obtenerEstrategia().obtenerEvaluador().obtenerPesos());
+                    salir = false;
+                    break;
+                }
+            }
+        }
+        
+        System.out.println("Pesos finales: " + jugador1.obtenerEstrategia().obtenerEvaluador().obtenerPesos());
+
     }
+    
 
     private static void cargarArgumentos(String[] args) {
         // procesar parametros de linea de comandos
@@ -95,21 +111,21 @@ public class Entrenamiento {
                 jugar(jugador1, jugador2, tablero);
             }
             // Mostrar resultados
-            tablero.mostrar();
+            //tablero.mostrar();
             if (tablero.hayEmpate()) {
-                System.out.println("RESULTADO: Empate");
+                //System.out.println("RESULTADO: Empate");
             }
             if (tablero.ganaJ1()){
-                System.out.println("RESULTADO: Gana jugador 1");
+                //System.out.println("RESULTADO: Gana jugador 1");
                 jugador1_gana++;
             }
             if (tablero.ganaJ2()){
-                System.out.println("RESULTADO: Gana jugador 2");
+                //System.out.println("RESULTADO: Gana jugador 2");
                 jugador2_gana++;
             }
         }
-        System.out.println("Jugador 1: "+jugador1_gana+" victorias");
-        System.out.println("Jugador 2: "+jugador2_gana+" victorias");
+        //System.out.println("Jugador 1: "+jugador1_gana+" victorias");
+        //System.out.println("Jugador 2: "+jugador2_gana+" victorias");
         if (jugador1_gana < jugador2_gana) {
             return true;
         } else {

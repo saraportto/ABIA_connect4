@@ -41,4 +41,12 @@ public class EstrategiaHumano extends Estrategia {
         return(buffer);
     }
 
+    public void establecerEvaluador(Evaluador evaluador) {
+      return;
+    }
+
+    public Evaluador obtenerEvaluador() {
+      return null;
+    }
+
 }
