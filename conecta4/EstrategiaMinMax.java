@@ -17,7 +17,7 @@ public class EstrategiaMinMax extends Estrategia {
     public EstrategiaMinMax() {
     }
     
-    public EstrategiaMinMax(int capaMaxima, Evaluador evaluador, int pesos) {
+    public EstrategiaMinMax(int capaMaxima, Evaluador evaluador) {
         this.establecerEvaluador(evaluador);
         this.establecerCapaMaxima(capaMaxima);
     }

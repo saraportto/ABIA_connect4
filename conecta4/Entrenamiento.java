@@ -19,7 +19,7 @@ public class Entrenamiento {
     // Crear jugadores y establecer estrategias
 	// Jugador 1: jugador humano
         Jugador jugador1 = new Jugador(1);
-        jugador1.establecerEstrategia(new EstrategiaMiniMax(
+        jugador1.establecerEstrategia(new EstrategiaMinMax(
             4,
             new EvaluadorPonderado()
         ));
@@ -27,7 +27,7 @@ public class Entrenamiento {
        
         // Jugador 2: jugador minimax con evaluador aleatorio y prof. busqueda 4
         Jugador jugador2 = new Jugador(2);
-        jugador2.establecerEstrategia(new EstrategiaMiniMax(
+        jugador2.establecerEstrategia(new EstrategiaMinMax(
             4,
             new EvaluadorPonderado()
         ));
@@ -101,7 +101,7 @@ public class Entrenamiento {
         int jugador1_gana = 0;
         int jugador2_gana = 0;
 
-        for (int partida=0; partida<8; partida++) {
+        for (int partida=0; partida<20; partida++) {
             Tablero tablero = new Tablero();
             tablero.inicializar();
 
@@ -111,7 +111,7 @@ public class Entrenamiento {
                 jugar(jugador1, jugador2, tablero);
             }
             // Mostrar resultados
-            //tablero.mostrar();
+            // tablero.mostrar();
             if (tablero.hayEmpate()) {
                 //System.out.println("RESULTADO: Empate");
             }

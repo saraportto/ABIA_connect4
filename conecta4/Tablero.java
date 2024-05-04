@@ -341,13 +341,13 @@ public class Tablero {
         for (int new_col = -1; new_col < 2; new_col++) {
             for (int new_fila = -1; new_fila < 2; new_fila++) {
                 if (new_col + col >= 0 && new_col + col < NCOLUMNAS && new_fila + fila >= 0 && new_fila + fila < NFILAS) {
-                    if (_casillas[new_col + col][new_fila + fila] == jugador) {
+                    if (_casillas[new_col + col][new_fila + fila] == jugador && !(new_col == 0 && new_fila == 0)) {
                         contador++;
                     }
                 }
             }
         }
-        return contador-1;  // Se resta 1 para no contar la casilla en la que se encuentra la propia ficha
+        return contador;
     }
 
     private void copiarCasillas(int[][] casillas) {
