@@ -177,6 +177,13 @@ public class Tablero {
         }
     }
     
+    public int comprobarUltimaFicha(int columna) {
+        if (_posicionLibre[columna] < NCOLUMNAS - 1) {
+            return _casillas[columna][_posicionLibre[columna]];
+        }
+        return -1;
+    }
+
     private boolean hayLineaVertical(int col, int fila, int jugador) {
         int j;
         int numCasillas = 0;

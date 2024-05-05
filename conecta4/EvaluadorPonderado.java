@@ -15,7 +15,7 @@ public class EvaluadorPonderado  extends Evaluador{
         valoracion = (
             valoracionPorAdyacentes(tablero, jugador) * pesos.obtenerPeso(0)
             + valoracionPorTrios(tablero, jugador) * pesos.obtenerPeso(1)
-            - valoracionPorTrios(tablero, Jugador.alternarJugador(jugador)) * pesos.obtenerPeso(2)
+            + valoracionPorTops(tablero, jugador) * pesos.obtenerPeso(2)
         );
         return(valoracion);
     }
@@ -45,6 +45,25 @@ public class EvaluadorPonderado  extends Evaluador{
         }
         valoracion = (valoracion / MAX_TRIOS) * 100;  // Normalizar de 0 a 100
         return((int)valoracion);
+    }
+
+    public int valoracionPorTops(Tablero tablero, int jugador) {
+        double valoracion = 0;
+
+        for (int col = 0; col < Tablero.NCOLUMNAS; col++) {
+            if (tablero.comprobarUltimaFicha(col) == jugador) {
+                valoracion++;
+            }
+        }
+
+        valoracion = (valoracion / 7) * 100;
+        
+        if (valoracion > 100) {
+            System.out.println("Valoracion mayor que 100");
+            System.exit(1);
+        }
+
+        return ((int)valoracion);
     }
 
     public Pesos obtenerPesos() {
