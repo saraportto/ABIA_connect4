@@ -22,7 +22,7 @@ public class EvaluadorPonderado  extends Evaluador{
         return(valoracion);
     }
 
-    private int valoracionPorAdyacentes(Tablero tablero, int jugador) {
+    private double valoracionPorAdyacentes(Tablero tablero, int jugador) {
         double valoracion = 0;
         for (int col=0; col < Tablero.NCOLUMNAS; col++) {
             for (int fila=0; fila < Tablero.NFILAS; fila++) {
@@ -31,11 +31,11 @@ public class EvaluadorPonderado  extends Evaluador{
                 }
             }
         }
-        valoracion = (valoracion / MAX_ADYACENTES) * 100;  // Normalizar de 0 a 100
-        return((int)valoracion);
+        valoracion /= MAX_ADYACENTES;  // Normalizar de 0 a 1
+        return valoracion;
     }
 
-    private int valoracionPorTrios(Tablero tablero, int jugador) {
+    private double valoracionPorTrios(Tablero tablero, int jugador) {
         int noObjetivo = 3;
         double valoracion = 0;
         for (int col=0; col < Tablero.NCOLUMNAS; col++) {
@@ -45,11 +45,11 @@ public class EvaluadorPonderado  extends Evaluador{
                     + tablero.contarLineaDiagonal(col,fila,jugador, noObjetivo);
             }
         }
-        valoracion = (valoracion / MAX_TRIOS) * 100;  // Normalizar de 0 a 100
-        return((int)valoracion);
+        valoracion /= MAX_TRIOS;  // Normalizar de 0 a 1
+        return valoracion;
     }
 
-    public int valoracionPorTops(Tablero tablero, int jugador) {
+    public double valoracionPorTops(Tablero tablero, int jugador) {
         double valoracion = 0;
 
         for (int col = 0; col < Tablero.NCOLUMNAS; col++) {
@@ -58,11 +58,11 @@ public class EvaluadorPonderado  extends Evaluador{
             }
         }
 
-        valoracion = (valoracion / MAX_TOPS) * 100;
-        return ((int)valoracion);
+        valoracion /= MAX_TOPS;  // Normalizar de 0 a 1
+        return valoracion;
     }
 
-    private int valoracionPorCentros(Tablero tablero, int jugador) {
+    private double valoracionPorCentros(Tablero tablero, int jugador) {
         double valoracion = 0;
         for (int col=0; col < Tablero.NCOLUMNAS; col++) {
             for (int fila=0; fila < Tablero.NFILAS; fila++) {
@@ -76,8 +76,8 @@ public class EvaluadorPonderado  extends Evaluador{
             }
         }
 
-        valoracion = (valoracion / MAX_CENTROS) * 100;  // Normalizar de 0 a 100
-        return((int)valoracion);
+        valoracion /= MAX_CENTROS;  // Normalizar de 0 a 1
+        return valoracion;
     }
 
     public Pesos obtenerPesos() {
