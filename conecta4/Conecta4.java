@@ -105,12 +105,11 @@ public class Conecta4 {
         Double peso;
 
         System.out.println("Introduzca los pesos para el juador "+jugador);
-        res = scanner.nextLine();
         do {
+            res = scanner.nextLine();
             peso = Double.parseDouble(res);
             pesos.add(peso);
-            res = scanner.nextLine();
-        } while (!res.isEmpty());
+        } while (pesos.size() < 4);
 
         return pesos.toArray(new Double[pesos.size()]);
     }
