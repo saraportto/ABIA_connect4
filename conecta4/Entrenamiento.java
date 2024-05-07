@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Entrenamiento {
     private Jugador _jugador1;    
@@ -15,13 +16,12 @@ public class Entrenamiento {
      */
     public static void main(String[] args) {
         cargarArgumentos(args);
-
     // Crear jugadores y establecer estrategias
 	// Jugador 1: jugador humano
         Jugador jugador1 = new Jugador(1);
         jugador1.establecerEstrategia(new EstrategiaMinMax(
             4,
-            new EvaluadorPonderado()
+            new EvaluadorPonderado(1.0, 1.0, 1.0, 1.0)
         ));
         DEBUG("Jugador 1: maquina actual\n");
        

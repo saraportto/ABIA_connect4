@@ -41,7 +41,11 @@ public class Conecta4 {
         // Jugar
         Tablero tablero = new Tablero();
         tablero.inicializar();
+
+        long startTime = System.currentTimeMillis();
         jugar(jugador1, jugador2, tablero);
+        long endTime = System.currentTimeMillis();
+        System.out.println("Tiempo de ejecución: " + (endTime - startTime) + "ms");
                 
         // Mostrar resultados
         tablero.mostrar();
@@ -104,7 +108,7 @@ public class Conecta4 {
         String res;
         Double peso;
 
-        System.out.println("Introduzca los pesos para el juador "+jugador);
+        System.out.println("Introduzca los pesos para el jugador "+jugador);
         do {
             res = scanner.nextLine();
             peso = Double.parseDouble(res);
