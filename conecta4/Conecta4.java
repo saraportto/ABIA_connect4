@@ -3,6 +3,10 @@
  *
  */
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author  ribadas
@@ -24,16 +28,16 @@ public class Conecta4 {
         cargarArgumentos(args);
 
     // Crear jugadores y establecer estrategias
-	// Jugador 1: jugador humano
-        Jugador jugador1 = new Jugador(1);
-        jugador1.establecerEstrategia(new EstrategiaHumano());
-        DEBUG("Jugador 1: humano\n");
-       
-        // Jugador 2: jugador minimax con evaluador aleatorio y prof. busqueda 4
-        Jugador jugador2 = new Jugador(2);
-        jugador2.establecerEstrategia(new EstrategiaMinMax(4, new EvaluadorAleatorio()));
-        DEBUG("Jugador 2: maquina (minimax con eval. aleatorio + prof. 4)\n");
-       
+	// Jugador 1: personalizado
+
+        Scanner scanner = new Scanner(System.in);
+
+        Jugador jugador1 = crearJugador(scanner, 1);
+        DEBUG("Jugador 1: maquina actual\n");
+
+        Jugador jugador2 = crearJugador(scanner, 2);
+        DEBUG("Jugador 2: maquina nueva\n");
+
         // Jugar
         Tablero tablero = new Tablero();
         tablero.inicializar();
@@ -93,6 +97,57 @@ public class Conecta4 {
               ERROR_FATAL("Movimiento invalido. Juego Abortado.");
             }            
         }        
+    }
+
+    private static Double[] preguntarPesos(Scanner scanner, int jugador) {
+        ArrayList<Double> pesos = new ArrayList<Double>();
+        String res;
+        Double peso;
+
+        System.out.println("Introduzca los pesos para el juador "+jugador);
+        res = scanner.nextLine();
+        do {
+            peso = Double.parseDouble(res);
+            pesos.add(peso);
+            res = scanner.nextLine();
+        } while (!res.isEmpty());
+
+        return pesos.toArray(new Double[pesos.size()]);
+    }
+
+    private static Jugador crearJugador(Scanner scanner, int id) {
+        System.out.println("Introduzca el modo de juego(persona/aleatorio/ponderado):");
+        String modo = modoDeJuego(scanner);
+        while (!modo.equals("persona") && !modo.equals("aleatorio") && !modo.equals("ponderado")) {
+            System.out.println("Introduzca el modo de juego(persona/aleatorio/ponderado):");
+            modo = modoDeJuego(scanner);
+        }
+
+        Jugador jugador = new Jugador(id);
+        if (modo.equals("persona")) {
+            jugador.establecerEstrategia(new EstrategiaHumano());
+        } else if (modo.equals("ponderado")) {
+            Double[] pesos = preguntarPesos(scanner, id);
+            System.out.println("Introduzca la capa maxima:");
+            int capaMaxima = scanner.nextInt();
+            jugador.establecerEstrategia(new EstrategiaMinMax(
+                capaMaxima,
+                new EvaluadorPonderado(pesos)
+            ));
+        } else {
+            System.out.println("Introduzca la capa maxima:");
+            int capaMaxima = scanner.nextInt();
+            jugador.establecerEstrategia(new EstrategiaMinMax(
+                capaMaxima,
+                new EvaluadorAleatorio()
+            ));
+        }
+
+        return jugador;
+    }
+
+    private static String modoDeJuego(Scanner scanner) {
+        return scanner.nextLine();
     }
       
     public static final void ERROR_FATAL(java.lang.String mensaje) {

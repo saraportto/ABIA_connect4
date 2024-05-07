@@ -4,20 +4,20 @@ public class EvaluadorPonderado  extends Evaluador{
     private int MAX_TOPS = 7;
     private int MAX_CENTROS = 20;
     
-    public Pesos pesos;
+    public Pesos _pesos;
 
-    public EvaluadorPonderado() {
-        pesos = new Pesos(1.0, 1.0, 1.0, 0.5);
+    public EvaluadorPonderado(Double... pesos) {
+        _pesos = new Pesos(pesos);
     }
 
     @Override
     public double valoracion(Tablero tablero, int jugador) {
         double valoracion = 0;
         valoracion = (
-            valoracionPorAdyacentes(tablero, jugador) * pesos.obtenerPeso(0)
-            + valoracionPorTrios(tablero, jugador) * pesos.obtenerPeso(1)
-            + valoracionPorTops(tablero, jugador) * pesos.obtenerPeso(2)
-            + valoracionPorCentros(tablero, jugador) * pesos.obtenerPeso(3)
+            valoracionPorAdyacentes(tablero, jugador) * _pesos.obtenerPeso(0)
+            + valoracionPorTrios(tablero, jugador) * _pesos.obtenerPeso(1)
+            + valoracionPorTops(tablero, jugador) * _pesos.obtenerPeso(2)
+            + valoracionPorCentros(tablero, jugador) * _pesos.obtenerPeso(3)
         );
         return(valoracion);
     }
@@ -81,10 +81,10 @@ public class EvaluadorPonderado  extends Evaluador{
     }
 
     public Pesos obtenerPesos() {
-        return pesos;
+        return _pesos;
     }
 
     public void establecerPesos(Pesos pesos) {
-        this.pesos = pesos;
+        this._pesos = pesos;
     }
 }
