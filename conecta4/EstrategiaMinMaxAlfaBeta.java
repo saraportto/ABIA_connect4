@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class EstrategiaMinMax extends Estrategia {
+public class EstrategiaMinMaxAlfaBeta extends Estrategia {
     /* Estrategia que implementa una busqueda MINIMAX
      * 
      * Los parametros de la busqueda (funcion de evaluacion + cota máxima)
@@ -12,18 +12,20 @@ public class EstrategiaMinMax extends Estrategia {
     private Evaluador _evaluador;
     private int _capaMaxima;
     private int _jugadorMAX;
+    private int _nodos = 0;
    
     /** Creates a new instance of EstrategiaMiniMax */
-    public EstrategiaMinMax() {
+    public EstrategiaMinMaxAlfaBeta() {
     }
     
-    public EstrategiaMinMax(int capaMaxima, Evaluador evaluador) {
+    public EstrategiaMinMaxAlfaBeta(int capaMaxima, Evaluador evaluador) {
         this.establecerEvaluador(evaluador);
         this.establecerCapaMaxima(capaMaxima);
     }
 
     public int buscarMovimiento(Tablero tablero, int jugador) {
-
+        
+        _nodos = 0;
         boolean movimientosPosibles[] = tablero.columnasLibres();
         Tablero nuevoTablero;
         int col;
@@ -37,6 +39,7 @@ public class EstrategiaMinMax extends Estrategia {
         for (col=0; col<Tablero.NCOLUMNAS; col++) {
             if (movimientosPosibles[col]) { //se puede añadir ficha en columna
                 // crear nuevo tablero y comprobar ganador
+                _nodos += 1;
                 nuevoTablero = (Tablero) tablero.clone();
                 nuevoTablero.anadirFicha(col,jugador);
                 nuevoTablero.obtenerGanador();
@@ -60,6 +63,7 @@ public class EstrategiaMinMax extends Estrategia {
         }
 
         // seleccionar uno de los mejores movimientos de forma aleatoria
+        System.out.println("Nodos evaluados: " + _nodos);
         if (mejoresPosiciones.length > 1) {
             int indiceAleatorio = rand.nextInt(mejoresPosiciones.length);
             while (mejoresPosiciones[indiceAleatorio] == -1) {
@@ -107,6 +111,7 @@ public class EstrategiaMinMax extends Estrategia {
            beta_actual = beta;
             aux = Integer.MAX_VALUE;
             for (col=0; col<Tablero.NCOLUMNAS; col++) {
+                _nodos += 1;
                 if (movimientosPosibles[col]) { //se puede añadir ficha en columna
                     // crear nuevo tablero y comprobar ganador
                     nuevoTablero = (Tablero) tablero.clone();
@@ -127,6 +132,7 @@ public class EstrategiaMinMax extends Estrategia {
             alpha_actual = alpha;
             aux = Integer.MIN_VALUE;
             for (col=0; col<Tablero.NCOLUMNAS; col++) {
+                _nodos += 1;
                 if (movimientosPosibles[col]) { //se puede añadir ficha en columna
                     // crear nuevo tablero y comprobar ganador
                     nuevoTablero = (Tablero) tablero.clone();

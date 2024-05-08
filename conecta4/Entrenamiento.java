@@ -19,7 +19,7 @@ public class Entrenamiento {
     // Crear jugadores y establecer estrategias
 	// Jugador 1: jugador humano
         Jugador jugador1 = new Jugador(1);
-        jugador1.establecerEstrategia(new EstrategiaMinMax(
+        jugador1.establecerEstrategia(new EstrategiaMinMaxAlfaBeta(
             4,
             new EvaluadorPonderado(1.0, 1.0, 1.0, 1.0)
         ));
@@ -27,7 +27,7 @@ public class Entrenamiento {
        
         // Jugador 2: jugador minimax con evaluador aleatorio y prof. busqueda 4
         Jugador jugador2 = new Jugador(2);
-        jugador2.establecerEstrategia(new EstrategiaMinMax(
+        jugador2.establecerEstrategia(new EstrategiaMinMaxAlfaBeta(
             4,
             new EvaluadorPonderado()
         ));
