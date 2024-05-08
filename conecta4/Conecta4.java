@@ -143,10 +143,10 @@ public class Conecta4 {
     }
 
     private static Jugador crearJugador(Scanner scanner, int id) {
-        System.out.println("Introduzca el modo de juego(persona/aleatorio/ponderado):");
+        System.out.println("Introduzca el modo de juego(persona/aleatorio/ponderado/noAlfaBeta):");
         String modo = modoDeJuego(scanner);
-        while (!modo.equals("persona") && !modo.equals("aleatorio") && !modo.equals("ponderado")) {
-            System.out.println("Introduzca el modo de juego(persona/aleatorio/ponderado):");
+        while (!modo.equals("persona") && !modo.equals("aleatorio") && !modo.equals("ponderado") && !modo.equals("noAlfaBeta")) {
+            System.out.println("Introduzca el modo de juego(persona/aleatorio/ponderado/noAlfaBeta):");
             modo = modoDeJuego(scanner);
         }
 
@@ -157,17 +157,39 @@ public class Conecta4 {
             Double[] pesos = preguntarPesos(scanner, id);
             System.out.println("Introduzca la capa maxima:");
             int capaMaxima = scanner.nextInt();
-            jugador.establecerEstrategia(new EstrategiaMinMax(
+            jugador.establecerEstrategia(new EstrategiaMinMaxAlfaBeta(
                 capaMaxima,
                 new EvaluadorPonderado(pesos)
+            ));
+        } else if (modo.equals("aleatorio")){
+            System.out.println("Introduzca la capa maxima:");
+            int capaMaxima = scanner.nextInt();
+            jugador.establecerEstrategia(new EstrategiaMinMaxAlfaBeta(
+                capaMaxima,
+                new EvaluadorAleatorio()
             ));
         } else {
             System.out.println("Introduzca la capa maxima:");
             int capaMaxima = scanner.nextInt();
-            jugador.establecerEstrategia(new EstrategiaMinMax(
-                capaMaxima,
-                new EvaluadorAleatorio()
-            ));
+            System.out.println("Introduzca el evaluador(aleatorio/ponderado):");
+            String evaluador = scanner.nextLine();
+            while (!evaluador.equals("aleatorio") && !evaluador.equals("ponderado")){
+                System.out.println("Introduzca el evaluador(aleatorio/ponderado):");
+                evaluador = scanner.nextLine();
+            }
+
+            if (evaluador.equals("ponderado")) {
+                Double[] pesos = preguntarPesos(scanner, id);
+                jugador.establecerEstrategia(new EstrategiaMiniMax(
+                    capaMaxima,
+                    new EvaluadorPonderado(pesos)
+                ));
+            } else {
+                jugador.establecerEstrategia(new EstrategiaMiniMax(
+                    capaMaxima,
+                    new EvaluadorAleatorio()
+                ));
+            }
         }
 
         return jugador;

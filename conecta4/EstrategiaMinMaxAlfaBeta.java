@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class EstrategiaMinMax extends Estrategia {
+public class EstrategiaMinMaxAlfaBeta extends Estrategia {
     /* Estrategia que implementa una busqueda MINIMAX
      * 
      * Los parametros de la busqueda (funcion de evaluacion + cota máxima)
@@ -15,10 +15,10 @@ public class EstrategiaMinMax extends Estrategia {
     private int _nodos = 0;
    
     /** Creates a new instance of EstrategiaMiniMax */
-    public EstrategiaMinMax() {
+    public EstrategiaMinMaxAlfaBeta() {
     }
     
-    public EstrategiaMinMax(int capaMaxima, Evaluador evaluador) {
+    public EstrategiaMinMaxAlfaBeta(int capaMaxima, Evaluador evaluador) {
         this.establecerEvaluador(evaluador);
         this.establecerCapaMaxima(capaMaxima);
     }
